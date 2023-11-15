@@ -12,7 +12,8 @@ import tempfile
 import cloudpathlib
 import boto3
 import shutil
-import multiprocessing
+from torch import multiprocessing
+torch.multiprocessing.set_start_method('spawn')
 
 @dataclass
 class Args:
