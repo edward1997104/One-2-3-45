@@ -20,6 +20,7 @@ class Args:
     cuda_cnt : int = 8
     half_precision : bool = False
     mesh_resolution : int = 256
+    bucket : str = 'gso-renders'
     output_format : str = ".obj"
     ext : str = '018.png'
 
