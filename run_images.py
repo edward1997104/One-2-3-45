@@ -125,7 +125,7 @@ def process_one(img, gpu_idx, model_zero123):
         cloudpath.download_to(save_path)
 
         # predict multiview
-        predict_multiview(shape_dir, gpu_idx, args.half_precision, save_path, model_zero123)
+        predict_multiview(shape_dir, gpu_idx, save_path, model_zero123)
 
         # reconstruct
         mesh_path = reconstruct(shape_dir, output_format=args.output_format, device_idx=gpu_idx, resolution=args.mesh_resolution)
