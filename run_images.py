@@ -13,7 +13,6 @@ import cloudpathlib
 import boto3
 import shutil
 from torch import multiprocessing
-torch.multiprocessing.set_start_method('spawn')
 
 @dataclass
 class Args:
@@ -163,7 +162,7 @@ def worker(queue, count, worker_i):
 
 
 if __name__ == "__main__":
-
+    torch.multiprocessing.set_start_method('spawn')
     s3 = boto3.resource('s3')
 
     os.makedirs(args.output_dir, exist_ok=True)
