@@ -16,6 +16,21 @@ from torch import multiprocessing
 import pickle
 torch.multiprocessing.set_start_method('spawn', force=True)
 
+@dataclass
+class Args:
+    output_dir : str
+    workers : int = 8
+    cuda_cnt : int = 8
+    half_precision : bool = False
+    mesh_resolution : int = 256
+    bucket : str = 'gso-renders'
+    output_format : str = ".obj"
+    ext : str = '018.png'
+    file_path_pickle : str = 'file_paths.pkl'
+    render_resolution : int = 384
+
+args = tyro.cli(Args)
+
 img_bucket_mapping = {
             f'ABC_renders_{args.render_resolution}': 'abc-renders',
             f'BuildingNet_renders_{args.render_resolution}': 'buildingnet-renders',
@@ -38,21 +53,6 @@ img_bucket_mapping = {
             f'Gso_renders_{args.render_resolution}': 'gso-renders',
             f'3DFuture_renders_{args.render_resolution}': '3dfuture-renders',
         }
-@dataclass
-class Args:
-    output_dir : str
-    workers : int = 8
-    cuda_cnt : int = 8
-    half_precision : bool = False
-    mesh_resolution : int = 256
-    bucket : str = 'gso-renders'
-    output_format : str = ".obj"
-    ext : str = '018.png'
-    file_path_pickle : str = 'file_paths.pkl'
-    render_resolution : int = 384
-
-args = tyro.cli(Args)
-
 
 def preprocess(predictor, raw_im, lower_contrast=False):
     raw_im.thumbnail([512, 512], Image.Resampling.LANCZOS)
