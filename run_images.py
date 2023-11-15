@@ -157,6 +157,8 @@ if __name__ == "__main__":
 
     s3 = boto3.resource('s3')
 
+    os.makedirs(args.output_dir, exist_ok=True)
+
     ## getting file with extensions in s3 bucket
     bucket = s3.Bucket(args.bucket)
     img_lists = []
