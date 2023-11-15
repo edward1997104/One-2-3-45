@@ -114,14 +114,19 @@ def predict_multiview(shape_dir, gpu_idx , img_path, model_zero123):
     stage2_run(model_zero123, device, shape_dir, elev, scale=3, stage2_steps=50)
 
 def process_one(img, gpu_idx, model_zero123):
+    id = img.split('/')[-3]
+    save_filename = f"{id}.png"
+    obj_path = os.path.join(args.output_dir, f'{id}.obj')
+
+    if os.path.exists(obj_path):
+        print(f"Skipping {obj_path}.......")
+        return id
 
     with tempfile.TemporaryDirectory() as shape_dir:
 
         ### processing
         print("start processing: ", img)
         cloudpath = cloudpathlib.CloudPath(f's3://gso-renders/{img}')
-        id = img.split('/')[-3]
-        save_filename = f"{id}.png"
         save_path = os.path.join(shape_dir, save_filename)
         cloudpath.download_to(save_path)
 
@@ -132,7 +137,6 @@ def process_one(img, gpu_idx, model_zero123):
         mesh_path = reconstruct(shape_dir, output_format=args.output_format, device_idx=gpu_idx, resolution=args.mesh_resolution)
 
         # copy mesh path to output dir
-        obj_path = os.path.join(args.output_dir, f'{id}.obj')
         shutil.copyfile(mesh_path, obj_path)
 
         print("Saved to:", obj_path)
