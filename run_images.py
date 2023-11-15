@@ -9,6 +9,8 @@ from elevation_estimate.estimate_wild_imgs import estimate_elev
 import tyro
 from dataclasses import dataclass
 import tempfile
+import cloudpathlib
+import boto3
 import shutil
 
 @dataclass
