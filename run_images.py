@@ -183,7 +183,7 @@ if __name__ == "__main__":
         process = multiprocessing.Process(
             target=worker, args=(queue, count, worker_i)
         )
-        process.daemon = True
+        # process.daemon = True
         process.start()
 
     for img in img_lists:
