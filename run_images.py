@@ -138,6 +138,10 @@ def process_one(img, gpu_idx, model_zero123):
 
 def worker(queue, count, worker_i):
 
+    cuda_id = worker_idx % args.cuda_cnt
+    torch.cuda.set_device(f'cuda:{cuda_id}')
+    device = torch.device(f'cuda:{cuda_id}')
+    os.environ['CUDA_VISIBLE_DEVICES'] = str(cuda_id)
 
     # initialize the zero123 model
     models = init_model(device, 'zero123-xl.ckpt', half_precision=args.half_precision)
