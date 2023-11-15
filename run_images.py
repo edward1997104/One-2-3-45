@@ -12,6 +12,7 @@ import tempfile
 import cloudpathlib
 import boto3
 import shutil
+import multiprocessing
 
 @dataclass
 class Args:
