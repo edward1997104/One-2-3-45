@@ -140,7 +140,7 @@ def predict_multiview(shape_dir, gpu_idx , img_path, model_zero123):
 
 def process_one(img, gpu_idx, model_zero123):
     dataset, id = img
-    dataset = dataset.replace("_wavelet_latents", f'_renders_{args.render_resolution}')
+    dataset = dataset.replace("_wavelet_latents", f'_renders_{args.render_resolution}').replace("_fixed", "")
     bucket = img_bucket_mapping[dataset]
     save_filename = f"{id}.png"
     obj_path = os.path.join(args.output_dir, f'{id}.obj')
